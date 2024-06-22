@@ -23,7 +23,12 @@ const News = () => {
     dispatch(newsAction.fetchNewsStart());
 
     try {
-      const response = await fetch(url);
+      // const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         dispatch(newsAction.fetchNewsSuccess(data));
