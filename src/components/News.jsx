@@ -15,8 +15,7 @@ const News = () => {
   const { articles, loading, totalPages, page, searchArticle, category } = useSelector((state) => state.news);
 
   const api_Key = import.meta.env.VITE_NEWS_API_KEY;
-
- const url = `https://newsdata.io/api/1/latest?apikey=${api_Key}`
+ const url = `https://newsdata.io/api/1/latest?apikey=${api_Key}&q=${page}`
    
   const fetchData = async () => {
     dispatch(newsAction.fetchNewsStart());
