@@ -87,8 +87,8 @@ const News = () => {
               onError={(e) => e.target.src = defaultImage}
             />
             <div className="p-4">
-              <h4 className="text-xl font-semibold text-blue-600 cursor-pointer">
-              onClick={() => handleAddFavorite(item)}
+              <h4 className="text-xl font-semibold text-blue-600 cursor-pointer"
+                onClick={() => handleAddFavorite(item)}>
                 {item.title}
               </h4>
               <p className="mb-2 leading-normal">{item.content}</p>
