@@ -13,9 +13,11 @@ const News = () => {
   const navigate = useNavigate();
   const { articles, loading, totalPages, page, searchArticle, category } = useSelector((state) => state.news);
 
+  const api_Key = import.meta.env.VITE_NEWS_API_KEY;
+
   const url = searchArticle
-    ? `https://newsapi.org/v2/everything?q=${searchArticle}&apiKey=4520e7c5e2bb41f1b2ddde5e06b20c62&page=${page}&pageSize=9`
-    : `https://newsapi.org/v2/top-headlines?country=us${category ? `&category=${category}` : ""}&page=${page}&pageSize=9&apiKey=4520e7c5e2bb41f1b2ddde5e06b20c62`;
+    ? `https://newsapi.org/v2/everything?q=${searchArticle}&apiKey=${api_Key}&page=${page}&pageSize=9`
+    : `https://newsapi.org/v2/top-headlines?country=us${category ? `&category=${category}` : ""}&page=${page}&pageSize=9&apiKey=${api_Key}`;
 
   const fetchData = async () => {
     dispatch(newsAction.fetchNewsStart());
