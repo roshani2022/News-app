@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,15 +16,12 @@ const News = () => {
 
   const api_Key = import.meta.env.VITE_NEWS_API_KEY;
 
-  const url = searchArticle
-    ? `https://newsapi.org/v2/everything?q=${searchArticle}&apiKey=${api_Key}&page=${page}&pageSize=9`
-    : `https://newsapi.org/v2/top-headlines?country=us${category ? `&category=${category}` : ""}&page=${page}&pageSize=9&apiKey=${api_Key}`;
-
+ const url = `https://newsdata.io/api/1/latest?apikey=${api_Key}`
+   
   const fetchData = async () => {
     dispatch(newsAction.fetchNewsStart());
 
     try {
-      // const response = await fetch(url);
       const response = await fetch(url, {
         headers: {
           'Accept': 'application/json'
@@ -31,7 +29,9 @@ const News = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch(newsAction.fetchNewsSuccess(data));
+        console.log(data.results)
+        dispatch(newsAction.fetchNewsSuccess(data.results));
+        
       } else {
         throw new Error('Failed to fetch data');
       }
@@ -89,7 +89,7 @@ const News = () => {
           <div className="w-full rounded-lg shadow-md" key={key}>
             <img
               className="object-cover w-full h-48"
-              src={item.urlToImage || defaultImage}
+              src={item.image_url || defaultImage}
               alt="image"
               onError={(e) => e.target.src = defaultImage}
             />
@@ -98,7 +98,7 @@ const News = () => {
                 onClick={() => handleAddFavorite(item)}>
                 {item.title}
               </h4>
-              <p className="mb-2 leading-normal">{item.content}</p>
+              <p className="mb-2 leading-normal">{item.description}</p>
               <button
                 className="px-4 py-2 text-sm text-blue-100 bg-blue-500 rounded shadow"
                 onClick={() => handleReadMore(item)}
@@ -120,4 +120,5 @@ const News = () => {
 };
 
 export default News;
+
 

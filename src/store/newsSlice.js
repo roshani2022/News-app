@@ -19,7 +19,8 @@ const newsSlice = createSlice({
         },
         fetchNewsSuccess(state, action) {
             state.loading = false;
-            state.articles = action.payload.articles;
+            // state.articles = action.payload.articles;
+            state.articles = action.payload;
             state.totalPages = Math.ceil(action.payload.totalResults / 9);
         },
         fetchNewsFailure(state, action) {

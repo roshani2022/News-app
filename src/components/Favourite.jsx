@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { favActions } from "../store/favSlice";
@@ -25,10 +26,10 @@ const Favourite = () => {
               <h4 className="ml-4 text-gray-500">{article.title}</h4>
                 <img
                   className="object-cover w-full h-48"
-                  src={article.urlToImage}
+                  src={article.image_url}
                   alt="image"
                 />
-                 <p className="mb-2 leading-normal">{article.content}</p>
+                 <p className="mb-2 leading-normal">{article.description}</p>
 
               </td>
               <td
@@ -46,4 +47,5 @@ const Favourite = () => {
 };
 
 export default Favourite;
+
 
