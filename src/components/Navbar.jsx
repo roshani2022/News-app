@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { newsAction } from "../store/newsSlice";
 import logo from "../assets/newsLogo.jpg";
-import categories from './data/data'
+import categories from './data/data';
 
 const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -22,7 +22,7 @@ const Navbar = () => {
   const handleSearch = () => {
     dispatch(newsAction.setSearchArticle(searchTerm));
     dispatch(newsAction.setCategory(null));
-    setSearchTerm('')
+    setSearchTerm('');
   };
 
   const handleCategoryChange = (category) => {
@@ -31,17 +31,23 @@ const Navbar = () => {
     setDropdownVisible(false);
   };
 
+  const handleHomeClick = () => {
+    dispatch(newsAction.setCategory(''));
+    dispatch(newsAction.setSearchArticle(''));
+    navigate('/');
+  };
+
   return (
     <div className="flex border p-2 shadow items-center sticky bg-white top-0 w-full z-50">
       <div className="w-[60px] h-[60px] flex items-center justify-center">
         <img className="w-[40px] h-[40px] rounded-full" src={logo} alt="logo" />
       </div>
       <div className="ml-4 text-blue-400 text-xl font-bold">
-        <Link className="mx-2" to="/">
+        <Link className="mx-2" to="/" onClick={handleHomeClick}>
           Home
         </Link>
         <Link className="mx-2" to="/favourite">
-          Favroutie
+          Favourite
         </Link>
       </div>
       <div className="relative ml-4">
@@ -103,3 +109,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

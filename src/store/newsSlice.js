@@ -6,7 +6,7 @@ const initialNewsState = {
   totalPages: 1,
   error: null,
   page: 1,
-  category: null,
+  category:localStorage.getItem("category")||"",
   searchArticle: "",
 };
 
@@ -32,6 +32,7 @@ const newsSlice = createSlice({
     setCategory(state, action) {
       state.category = action.payload;
       state.page = 1;
+      localStorage.setItem('category', action.payload);
     },
     setSearchArticle(state, action) {
       state.searchArticle = action.payload;

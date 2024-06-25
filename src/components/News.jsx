@@ -1,38 +1,50 @@
-
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Pagination";
-import { Oval } from 'react-loader-spinner';
-import { toast } from 'react-toastify';
+import { Oval } from "react-loader-spinner";
+import { toast } from "react-toastify";
 import { newsAction } from "../store/newsSlice";
-import defaultImage from '../assets/default-img.jpg';
+import defaultImage from "../assets/default-img.jpg";
 import { favActions } from "../store/favSlice";
+import categories from "./data/data";
 
 const News = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { articles, loading, totalPages, page, searchArticle, category } = useSelector((state) => state.news);
+  const { articles, loading, totalPages, page, searchArticle, category } =
+    useSelector((state) => state.news);
 
   const api_Key = import.meta.env.VITE_NEWS_API_KEY;
- const url = `https://newsdata.io/api/1/latest?apikey=${api_Key}&q=${page}`
-   
+
+  
+
+ 
   const fetchData = async () => {
     dispatch(newsAction.fetchNewsStart());
+    let url = `https://newsdata.io/api/1/latest?apikey=${api_Key}`;
+
+    if (category) {
+      url += `&category=${category}`;
+    }
+    if (searchArticle) {
+      url += `&q=${searchArticle}`;
+    }
+
+    url += `&q=${page}`;
 
     try {
       const response = await fetch(url, {
         headers: {
-          'Accept': 'application/json'
-        }
+          Accept: "application/json",
+        },
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data.results)
+        console.log(data.results);
         dispatch(newsAction.fetchNewsSuccess(data.results));
-        
       } else {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
     } catch (error) {
       dispatch(newsAction.fetchNewsFailure(error.message));
@@ -72,7 +84,7 @@ const News = () => {
           wrapperStyle={{}}
           wrapperClass=""
           visible={true}
-          ariaLabel='oval-loading'
+          ariaLabel="oval-loading"
           secondaryColor="#4fa94d"
           strokeWidth={2}
           strokeWidthSecondary={2}
@@ -90,11 +102,13 @@ const News = () => {
               className="object-cover w-full h-48"
               src={item.image_url || defaultImage}
               alt="image"
-              onError={(e) => e.target.src = defaultImage}
+              onError={(e) => (e.target.src = defaultImage)}
             />
             <div className="p-4">
-              <h4 className="text-xl font-semibold text-blue-600 cursor-pointer"
-                onClick={() => handleAddFavorite(item)}>
+              <h4
+                className="text-xl font-semibold text-blue-600 cursor-pointer"
+                onClick={() => handleAddFavorite(item)}
+              >
                 {item.title}
               </h4>
               <p className="mb-2 leading-normal">{item.description}</p>
@@ -119,5 +133,4 @@ const News = () => {
 };
 
 export default News;
-
 

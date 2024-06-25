@@ -1,10 +1,3 @@
-const categories = [
-    "business",
-    "entertainment",
-    "health",
-    "science",
-    "sports",
-    "technology",
-  ];
+const categories = ["business", "health", "sports","technology","entertainment"];
 
 export default categories;
