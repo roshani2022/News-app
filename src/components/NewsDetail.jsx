@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 const NewsDetail = () => {
   const location = useLocation();
-  
+  console.log(location)
   const { article} = location.state;
 
   return (
